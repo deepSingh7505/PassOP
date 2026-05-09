@@ -9,12 +9,12 @@ const Manager = () => {
     const [passwordarray, setPasswordarray] = useState([])
 
     useEffect(() => {
-      let passwords = localStorage.getItem("passwords")
-    if(passwords){
-       setPasswordarray(JSON.parse(passwords));
-    }
+        let passwords = localStorage.getItem("passwords")
+        if (passwords) {
+            setPasswordarray(JSON.parse(passwords));
+        }
     }, [])
-    
+
     const showpass = () => {
         if (showref.current.src.includes("icons/eye.png")) {
             showref.current.src = "icons/eyecross.png"
@@ -22,29 +22,27 @@ const Manager = () => {
         else {
             showref.current.src = "icons/eye.png"
         }
-      if(passref.current.type==="password")
-      {
-        passref.current.type="text"
-      }
-      else{
-        passref.current.type="password"
-      }
+        if (passref.current.type === "password") {
+            passref.current.type = "text"
+        }
+        else {
+            passref.current.type = "password"
+        }
     }
-  const savepassword = () => {
-    if(form.site===""||form.password===""||form.username==="")
-    {
-        alert("Fields Cannot Be Empty")
-    }
-    else{
-        setPasswordarray([...passwordarray ,form])
-        localStorage.setItem("passwords", JSON.stringify([...passwordarray , form]));
-        setform({ site: "", username: "", password: "" })
-        alert("Password saved in Local Storage")
-    }
-};
+    const savepassword = () => {
+        if (form.site === "" || form.password === "" || form.username === "") {
+            alert("Fields Cannot Be Empty")
+        }
+        else {
+            setPasswordarray([...passwordarray, form])
+            localStorage.setItem("passwords", JSON.stringify([...passwordarray, form]));
+            setform({ site: "", username: "", password: "" })
+            alert("Password saved in Local Storage")
+        }
+    };
     const handlechange = (e) => {
-        setform({...form, [e.target.name]:e.target.value})
-      }
+        setform({ ...form, [e.target.name]: e.target.value })
+    }
     return (
         <>
             <div className="absolute top-0 z-[-2] h-screen w-screen rotate-180 transform bg-green-50 bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(252,205,238,.5)_100%)]"></div>
@@ -67,7 +65,7 @@ const Manager = () => {
 
 
                         <div className="relative w-[50%]">
-                            <input ref={passref} onChange={handlechange} value={form.password} name="password" placeholder="Enter Password" className="border-green-500 border outline-none w-full text-black rounded-full p-1 px-2 pr-10"  type="password"/>
+                            <input ref={passref} onChange={handlechange} value={form.password} name="password" placeholder="Enter Password" className="border-green-500 border outline-none w-full text-black rounded-full p-1 px-2 pr-10" type="password" />
                             <span className="absolute text-black right-3 top-1/2 -translate-y-1/2">
                                 <img ref={showref} onClick={showpass} src="icons/eye.png" className="w-[25px] hover:cursor-pointer" alt="" />
                             </span>
@@ -85,7 +83,54 @@ const Manager = () => {
                         <span className="text-xl">Submit</span>
                     </div>
                 </div>
+
+                <div className="passwords">
+                    <h2 className="font-bold text-xl py-4">Your Passwords</h2>
+                    {passwordarray.length === 0 && <div>No password to show</div>}
+                    {passwordarray.length !== 0 &&
+                        <table class="table-auto w-full bg-green-100  overflow-hidden rounded-lg">
+                            <thead className="bg-green-800 ">
+                                <tr className="text-white">
+                                    <th className="py-2">Site</th>
+                                    <th className="py-2">Username</th>
+                                    <th className="py-2">Pass</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {passwordarray.map((item) => {
+
+                                    return <tr className="">
+                                        <td className="py-2 border border-white overflow-auto"><a href={item.site} target="_blank">{item.site} </a>
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/iykgtsbt.json"
+                                                trigger="hover"
+                                               style={{ width: "28px", height: "28px" }}>
+                                            </lord-icon>
+                                        </td>
+                                        <td className="py-2  text-center border border-white overflow-auto">{item.username}    <lord-icon
+                                                src="https://cdn.lordicon.com/iykgtsbt.json"
+                                                trigger="hover"
+                                               style={{ width: "28px", height: "28px" }}>
+                                            </lord-icon></td>
+                                        <td className="py-2 text-center border border-white overflow-auto">{item.password}    <lord-icon
+                                                src="https://cdn.lordicon.com/iykgtsbt.json"
+                                                trigger="hover"
+                                               style={{ width: "28px", height: "28px" }}>
+                                            </lord-icon></td>
+                                    </tr>
+
+
+                                })}
+
+
+                            </tbody>
+                        </table>
+                    }
+                </div>
+
             </div>
+
+
         </>
     );
 };
