@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useRef, useState } from "react";
 
+
+
 const Manager = () => {
     const showref = useRef();
     const passref = useRef();
@@ -43,6 +45,11 @@ const Manager = () => {
     const handlechange = (e) => {
         setform({ ...form, [e.target.name]: e.target.value })
     }
+    const copytext = (text)=>
+    {
+        console.log(`text to be copied is ${text}`);
+        navigator.clipboard.writeText(text);
+    }
     return (
         <>
             <div className="absolute top-0 z-[-2] h-screen w-screen rotate-180 transform bg-green-50 bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(252,205,238,.5)_100%)]"></div>
@@ -56,7 +63,7 @@ const Manager = () => {
                 </h1>
                 <p className='text-green-900 text-1g text-center'>Your own Password Manager</p>
 
-                <div className="text-white flex flex-col items-center p-4 gap-4">
+                <div className="text-white  flex flex-col items-center p-4 gap-4">
                     <input onChange={handlechange} value={form.site} name="site" placeholder="Enter Website URL" className="border-green-500 outline-none border rounded-full text-black p-1 px-2 w-3/4" type="text" />
 
                     <div className="flex justify-between w-3/4 gap-3">
@@ -88,9 +95,9 @@ const Manager = () => {
                     <h2 className="font-bold text-xl py-4">Your Passwords</h2>
                     {passwordarray.length === 0 && <div>No password to show</div>}
                     {passwordarray.length !== 0 &&
-                        <table class="table-auto w-full bg-green-100  overflow-hidden rounded-lg">
+                        <table className="table-auto w-full bg-green-100  overflow-hidden rounded-lg">
                             <thead className="bg-green-800 ">
-                                <tr className="text-white">
+                                <tr className="text-white" >
                                     <th className="py-2">Site</th>
                                     <th className="py-2">Username</th>
                                     <th className="py-2">Pass</th>
@@ -98,31 +105,54 @@ const Manager = () => {
                             </thead>
                             <tbody>
                                 {passwordarray.map((item) => {
+                                    return <tr>
+                                        <td>
+                                            <div className="py-2 border border-white  flex justify-center  overflow-auto">
+                                                <span className="cursor-pointer  flex justify-center ">
 
-                                    return <tr className="">
-                                        <td className="py-2 border border-white overflow-auto"><a href={item.site} target="_blank">{item.site} </a>
-                                            <lord-icon
-                                                src="https://cdn.lordicon.com/iykgtsbt.json"
-                                                trigger="hover"
-                                               style={{ width: "28px", height: "28px" }}>
-                                            </lord-icon>
+                                                <a href={item.site} target="_blank">{item.site} </a>
+                                                <div onClick={()=>copytext(item.site)} className="">
+                                                <lord-icon
+                                                    src="https://cdn.lordicon.com/iykgtsbt.json"
+                                                    trigger="click"
+                                                    style={{ width: "28px", height: "28px" }}>
+                                                </lord-icon>
+                                                        </div>
+                                                        </span>
+                                            </div>
                                         </td>
-                                        <td className="py-2  text-center border border-white overflow-auto">{item.username}    <lord-icon
-                                                src="https://cdn.lordicon.com/iykgtsbt.json"
-                                                trigger="hover"
-                                               style={{ width: "28px", height: "28px" }}>
-                                            </lord-icon></td>
-                                        <td className="py-2 text-center border border-white overflow-auto">{item.password}    <lord-icon
-                                                src="https://cdn.lordicon.com/iykgtsbt.json"
-                                                trigger="hover"
-                                               style={{ width: "28px", height: "28px" }}>
-                                            </lord-icon></td>
+                                        <td>
+                                            <div className="py-2 border border-white  flex justify-center  overflow-auto">
+                                                <span className="cursor-pointer  flex justify-center ">
+
+                                                {item.username}
+                                                <div onClick={()=>copytext(item.username)} className="">
+                                                <lord-icon
+                                                    src="https://cdn.lordicon.com/iykgtsbt.json"
+                                                    trigger="click"
+                                                    style={{ width: "28px", height: "28px" }}>
+                                                </lord-icon>
+                                                        </div>
+                                                        </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="py-2 border border-white  flex justify-center  overflow-auto">
+                                                <span className="cursor-pointer  flex justify-center ">
+                                                    
+                                                {item.password}
+                                                <div onClick={()=>copytext(item.password)} className="">
+                                                <lord-icon
+                                                    src="https://cdn.lordicon.com/iykgtsbt.json"
+                                                    trigger="click"
+                                                    style={{ width: "28px", height: "28px" }}>
+                                                </lord-icon>
+                                                        </div>
+                                                        </span>
+                                            </div>
+                                        </td>
                                     </tr>
-
-
                                 })}
-
-
                             </tbody>
                         </table>
                     }
