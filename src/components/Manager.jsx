@@ -1,8 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useRef, useState } from "react";
-
-
+import { ToastContainer, toast } from 'react-toastify';
 
 const Manager = () => {
     const showref = useRef();
@@ -33,25 +32,64 @@ const Manager = () => {
     }
     const savepassword = () => {
         if (form.site === "" || form.password === "" || form.username === "") {
-            alert("Fields Cannot Be Empty")
+            toast.error('Field is Empty', {
+                position: "top-right",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "dark",
+            });
         }
         else {
             setPasswordarray([...passwordarray, form])
             localStorage.setItem("passwords", JSON.stringify([...passwordarray, form]));
             setform({ site: "", username: "", password: "" })
-            alert("Password saved in Local Storage")
+            toast.success('Password saved !', {
+                position: "top-right",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "dark",
+            });
         }
     };
     const handlechange = (e) => {
         setform({ ...form, [e.target.name]: e.target.value })
     }
-    const copytext = (text)=>
-    {
+    const copytext = (text) => {
         console.log(`text to be copied is ${text}`);
         navigator.clipboard.writeText(text);
+        toast.success('Copied !', {
+                position: "top-right",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "dark",
+            });
     }
     return (
         <>
+            <ToastContainer
+                position="top-right"
+                autoClose={2500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable={false}
+                pauseOnHover={false}
+                theme="light"
+            />
             <div className="absolute top-0 z-[-2] h-screen w-screen rotate-180 transform bg-green-50 bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(252,205,238,.5)_100%)]"></div>
 
             <div className="mycontainer my-5">
@@ -110,45 +148,45 @@ const Manager = () => {
                                             <div className="py-2 border border-white  flex justify-center  overflow-auto">
                                                 <span className="cursor-pointer  flex justify-center ">
 
-                                                <a href={item.site} target="_blank">{item.site} </a>
-                                                <div onClick={()=>copytext(item.site)} className="">
-                                                <lord-icon
-                                                    src="https://cdn.lordicon.com/iykgtsbt.json"
-                                                    trigger="click"
-                                                    style={{ width: "28px", height: "28px" }}>
-                                                </lord-icon>
-                                                        </div>
-                                                        </span>
+                                                    <a href={item.site} target="_blank">{item.site} </a>
+                                                    <div onClick={() => copytext(item.site)} className="">
+                                                        <lord-icon
+                                                            src="https://cdn.lordicon.com/iykgtsbt.json"
+                                                            trigger="click"
+                                                            style={{ width: "28px", height: "28px" }}>
+                                                        </lord-icon>
+                                                    </div>
+                                                </span>
                                             </div>
                                         </td>
                                         <td>
                                             <div className="py-2 border border-white  flex justify-center  overflow-auto">
                                                 <span className="cursor-pointer  flex justify-center ">
 
-                                                {item.username}
-                                                <div onClick={()=>copytext(item.username)} className="">
-                                                <lord-icon
-                                                    src="https://cdn.lordicon.com/iykgtsbt.json"
-                                                    trigger="click"
-                                                    style={{ width: "28px", height: "28px" }}>
-                                                </lord-icon>
-                                                        </div>
-                                                        </span>
+                                                    {item.username}
+                                                    <div onClick={() => copytext(item.username)} className="">
+                                                        <lord-icon
+                                                            src="https://cdn.lordicon.com/iykgtsbt.json"
+                                                            trigger="click"
+                                                            style={{ width: "28px", height: "28px" }}>
+                                                        </lord-icon>
+                                                    </div>
+                                                </span>
                                             </div>
                                         </td>
                                         <td>
                                             <div className="py-2 border border-white  flex justify-center  overflow-auto">
                                                 <span className="cursor-pointer  flex justify-center ">
-                                                    
-                                                {item.password}
-                                                <div onClick={()=>copytext(item.password)} className="">
-                                                <lord-icon
-                                                    src="https://cdn.lordicon.com/iykgtsbt.json"
-                                                    trigger="click"
-                                                    style={{ width: "28px", height: "28px" }}>
-                                                </lord-icon>
-                                                        </div>
-                                                        </span>
+
+                                                    {item.password}
+                                                    <div onClick={() => copytext(item.password)} className="">
+                                                        <lord-icon
+                                                            src="https://cdn.lordicon.com/iykgtsbt.json"
+                                                            trigger="click"
+                                                            style={{ width: "28px", height: "28px" }}>
+                                                        </lord-icon>
+                                                    </div>
+                                                </span>
                                             </div>
                                         </td>
                                     </tr>

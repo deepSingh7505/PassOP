@@ -9,7 +9,7 @@ const Navbar = () => {
         <span className='text-green-500'>/OP&gt;</span>
 
         </div>
-        <ul className='flex gap-5 '>
+        <ul className='text-white flex gap-5 '>
             <li className='hover:font-bold'>Home</li>
             <li className='hover:font-bold'>About</li>
             <li className='hover:font-bold'>Contect</li>
