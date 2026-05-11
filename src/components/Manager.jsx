@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 const Manager = () => {
     const showref = useRef();
     const passref = useRef();
-    const [form, setform] = useState({id:"", site: "", username: "", password: "" })
+    const [form, setform] = useState({ id: "", site: "", username: "", password: "" })
     const [passwordarray, setPasswordarray] = useState([])
     const [foredit, setforedit] = useState({});
 
@@ -52,13 +52,12 @@ const Manager = () => {
             });
         }
         else {
-            if(foredit.id)
-            {
+            if (foredit.id) {
 
-                 const idpassword = {...foredit,...form}
-                 const newpasswordarray = [...passwordarray]
-                 const index = newpasswordarray.indexOf(foredit)
-                 newpasswordarray[index]=idpassword;
+                const idpassword = { ...foredit, ...form }
+                const newpasswordarray = [...passwordarray]
+                const index = newpasswordarray.indexOf(foredit)
+                newpasswordarray[index] = idpassword;
                 setPasswordarray(newpasswordarray)
                 localStorage.setItem("passwords", JSON.stringify(newpasswordarray));
                 setform({ site: "", username: "", password: "" })
@@ -74,8 +73,8 @@ const Manager = () => {
                     theme: "dark",
                 });
             }
-            else{
-                const idpassword = {...form, id : uuidv4()}
+            else {
+                const idpassword = { ...form, id: uuidv4() }
                 setPasswordarray([...passwordarray, idpassword])
                 localStorage.setItem("passwords", JSON.stringify([...passwordarray, idpassword]));
                 setform({ site: "", username: "", password: "" })
@@ -156,13 +155,12 @@ const Manager = () => {
     }
 
 
-    const handleedit =(item)=>{
+    const handleedit = (item) => {
         let newarray = [...passwordarray];
-        let index =newarray.indexOf(item);
-        if(index !== -1)
-        {
-           setform({ ...form, ...item})
-           setforedit(item)
+        let index = newarray.indexOf(item);
+        if (index !== -1) {
+            setform({ ...form, ...item })
+            setforedit(item)
         }
     }
     return (
@@ -191,8 +189,8 @@ const Manager = () => {
                 <p className='text-green-900 text-1g text-center'>Your own Password Manager</p>
 
                 <div className="text-white md:gap-9 flex flex-col items-center p-4 gap-4">
-                    <input onChange={handlechange} value={form.site} name="site" placeholder="Enter Website Full URL" 
-                    className="border-green-500 outline-none border rounded-full text-black p-1 px-2 md:w-3/4 md:pr-0 pr-20" type="text" />
+                    <input onChange={handlechange} value={form.site} name="site" placeholder="Enter Website Full URL"
+                        className="border-green-500 outline-none border rounded-full text-black p-1 px-2 md:w-3/4 md:pr-0 pr-20" type="text" />
 
                     <div className="flex md:flex-row flex-col justify-between md:w-3/4 gap-3">
                         <input onChange={handlechange} value={form.username} name="username" placeholder="Enter Username" className="border-green-500 border outline-none md:w-[50%] text-black rounded-full p-1 px-2" type="text" />
@@ -219,97 +217,95 @@ const Manager = () => {
                     </div>
                 </div>
 
-                <div className="passwords ">
-                    <h2 className="w-[75%] flex justify-center items-center m-auto font-bold text-xl py-4">Your Passwords</h2>
+           
+
+                <div className="passwords">
+                    <h2 className="w-full md:w-[75%] flex justify-center items-center m-auto font-bold text-xl py-4">
+                    Your Passwords
+                    </h2>
+                    
                     {passwordarray.length === 0 && <div>No password to show</div>}
-                    {passwordarray.length !== 0 &&
-                        <table className="px-5 table-auto w-[75%] m-auto bg-green-100  overflow-hidden rounded-lg">
-                            <thead className="bg-green-800 ">
-                                <tr className="text-white" >
-                                    <th className="py-2">Site</th>
-                                    <th className="py-2">Username</th>
-                                    <th className="py-2">Pass</th>
-                                    <th className="py-2">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {passwordarray.map((item) => {
-                                    return <tr className="border border-white ">
-                                        <td>
-                                            <div className="py-2   flex justify-center  overflow-auto">
-                                                <span className="cursor-pointer  flex justify-center ">
 
-                                                    <a href={item.site} target="_blank">{item.site} </a>
-                                                    <div onClick={() => copytext(item.site)} className="">
+                    {passwordarray.length !== 0 && (
+                        <div className="w-full overflow-x-auto">
+                            <table className="min-w-[700px] w-[75%] m-auto bg-green-100 rounded-lg overflow-hidden">
+                                <thead className="bg-green-800">
+                                    <tr className="text-white">
+                                        <th className="py-2 whitespace-nowrap">Site</th>
+                                        <th className="py-2 whitespace-nowrap">Username</th>
+                                        <th className="py-2 whitespace-nowrap">Pass</th>
+                                        <th className="py-2 whitespace-nowrap">Actions</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {passwordarray.map((item) => (
+                                        <tr key={item.id} className="border border-white">
+                                            <td className="py-2 px-3 whitespace-nowrap">
+                                                <div className="flex justify-center items-center gap-2">
+                                                    <a href={item.site} target="_blank" rel="noreferrer">
+                                                        {item.site}
+                                                    </a>
+                                                    <div onClick={() => copytext(item.site)} className="shrink-0">
                                                         <lord-icon
                                                             src="https://cdn.lordicon.com/iykgtsbt.json"
                                                             trigger="click"
-                                                            style={{ width: "28px", height: "28px" }}>
-                                                        </lord-icon>
+                                                            style={{ width: "28px", height: "28px" }}
+                                                        />
                                                     </div>
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div className="py-2   flex justify-center  overflow-auto">
-                                                <span className="cursor-pointer  flex justify-center ">
+                                                </div>
+                                            </td>
 
+                                            <td className="py-2 px-3 whitespace-nowrap">
+                                                <div className="flex justify-center items-center gap-2">
                                                     {item.username}
-                                                    <div onClick={() => copytext(item.username)} className="">
+                                                    <div onClick={() => copytext(item.username)} className="shrink-0">
                                                         <lord-icon
                                                             src="https://cdn.lordicon.com/iykgtsbt.json"
                                                             trigger="click"
-                                                            style={{ width: "28px", height: "28px" }}>
-                                                        </lord-icon>
+                                                            style={{ width: "28px", height: "28px" }}
+                                                        />
                                                     </div>
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div className="py-2   flex justify-center  overflow-auto">
-                                                <span className="cursor-pointer  flex justify-center ">
+                                                </div>
+                                            </td>
 
+                                            <td className="py-2 px-3 whitespace-nowrap">
+                                                <div className="flex justify-center items-center gap-2">
                                                     {item.password}
-                                                    <div onClick={() => copytext(item.password)} className="">
+                                                    <div onClick={() => copytext(item.password)} className="shrink-0">
                                                         <lord-icon
                                                             src="https://cdn.lordicon.com/iykgtsbt.json"
                                                             trigger="click"
-                                                            style={{ width: "28px", height: "28px" }}>
-                                                        </lord-icon>
+                                                            style={{ width: "28px", height: "28px" }}
+                                                        />
                                                     </div>
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td className="">
-                                            <div className="actions flex  justify-center  gap-8 items-center">
+                                                </div>
+                                            </td>
 
-                                                <div className="edit">
-                                                    <span onClick={()=>handleedit(item)} className="cursor-pointer  flex justify-center">
+                                            <td className="py-2 px-3 whitespace-nowrap">
+                                                <div className="flex justify-center items-center gap-6">
+                                                    <span onClick={() => handleedit(item)} className="cursor-pointer">
                                                         <lord-icon
                                                             src="https://cdn.lordicon.com/gwlusjdu.json"
                                                             trigger="click"
-                                                            style={{ "width": "28px", "height": "28px" }}>
-                                                        </lord-icon>
+                                                            style={{ width: "28px", height: "28px" }}
+                                                        />
                                                     </span>
-                                                </div>
-                                                <div className="delete">
-                                                    <span onClick={() => handledelete(item)} className="cursor-pointer  flex justify-center">
-
+                                                    <span onClick={() => handledelete(item)} className="cursor-pointer">
                                                         <lord-icon
                                                             src="https://cdn.lordicon.com/skkahier.json"
                                                             trigger="click"
-                                                            style={{ "width": "28px", "height": "28px" }}>
-                                                        </lord-icon>
+                                                            style={{ width: "28px", height: "28px" }}
+                                                        />
                                                     </span>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                })}
-                            </tbody>
-                        </table>
-                    }
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
                 </div>
 
             </div>
