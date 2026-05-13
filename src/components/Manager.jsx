@@ -149,9 +149,6 @@ const Manager = () => {
                 transition: Bounce
             });
         }
-
-
-
     }
 
 
